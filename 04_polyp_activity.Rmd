@@ -9,12 +9,16 @@ output: github_document
 knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(tidyverse)
 library(ordinal)
+library(cowplot)
+library(grid)
+library(ggrepel)
+library(DESeq2)
+library(ggpubr)
 ```
 
 ```{r}
 polyp_act<-read_csv("raw_data/Porites_polypact.csv") %>% 
-  mutate_if(is.numeric, as.factor) 
-
+  mutate_if(is.numeric, as.factor)
 
 polyp_act_long <- polyp_act %>% 
   pivot_longer(cols = starts_with("DAY"), names_to="Time", values_to="Activity") %>% 
@@ -24,8 +28,21 @@ polyp_act_long <- polyp_act %>%
   mutate(TimeCat = cut(Time, breaks=c(0,14.1,19.1,24.1,29.1,34.1,39.1,44.1,49.1,54.1,60))) %>% 
   mutate(TimeCat = factor(TimeCat,
          labels=c("<15","15-20","20-25","25-30","30-35","35-40","40-45","45-50","50-55","55-60")))
-  
 ```
+
+Summarise the distribution of replicates across experimental factors.
+
+```{r}
+polyp_act_long %>% 
+  group_by(TimeCat,TANK,HARD,TREAT,SOFT) %>% 
+  summarise(count=n()) %>% 
+  ggplot(aes(x=TimeCat)) + 
+  geom_tile(aes(fill=as.factor(count),y=TANK)) +
+  geom_point(aes(y=TANK,color=SOFT),size=0.5) +
+  facet_wrap(~HARD*TREAT,nrow = 1) + theme(axis.text.x = element_text(angle=90)) + 
+  scale_fill_grey()
+```
+
 
 This is a ggplot equivalent of of the Mosaicplots used in data exploration. This shows data aggregated across nubbins and tanks which does hide some important variation that is hard to capture graphically (see stats).  Overall however there are two clear trends;
 
@@ -33,7 +50,6 @@ This is a ggplot equivalent of of the Mosaicplots used in data exploration. This
 2. Colonies seemed to be more likely to be partial or closed at the start of the trial and gradually converted to open as the trial progressed.
 
 ```{r}
-library(ggpubr)
 polyp_act_long %>% na.omit() %>% 
   group_by(HARD,TREAT,TimeCat) %>%   
   mutate(tankcount=length(unique(TANK))) %>% 
@@ -65,3 +81,16 @@ Based on extensive model selection analysis (see [03_polyp_activity_exploration.
 fm3d =clmm2(location=Activity ~ TimeCat+TREAT+HARD, random=TANK, Hess=TRUE,  data=polyp_act_long)
 summary(fm3d)
 ```
+
+## Mesenteric Filament Data
+
+```{r}
+mesenteries_data <- readxl::read_excel("~/Dropbox/natalia_competition/Porites_competition/Mesentries Obsv_Bothcorals.xlsx") %>%
+  dplyr::rename(HARD=`Hard corasls`) %>% 
+  filter(HARD %in% c("Pa","Pc")) %>% 
+  mutate(HARD = ifelse(HARD=="Pa","Pd","Pf"))
+
+mesenteries_groups <- mesenteries_data %>% unite("pair",HARD,Softies,sep="") %>% pull(pair) %>% unique()
+```
+
+

@@ -15,7 +15,7 @@ wget 'https://cloudstor.aarnet.edu.au/plus/s/zjlFSUchshirLUt/download' -O data.t
 tar -zxvf data.tgz
 
 # This is a much larger file required for some analyses only
-wget 'https://cloudstor.aarnet.edu.au/plus/s/zjlFSUchshirLUt/download' -O data.transcriptome.tgz
+wget 'https://cloudstor.aarnet.edu.au/plus/s/uDTruJ83Q4OcHHd/download' -O data.transcriptome.tgz
 tar -zxvf data.transcriptome.tgz
 ```
 
@@ -31,4 +31,4 @@ tar -zxvf data.transcriptome.tgz
 - [Gene Annotation](01_annotate.md)
 - [Differential Expression Analysis](02_deseq.md)
 - [Analysis of Polyp Activity Observations](04_polyp_activity.md)
-
+- [Gene Function Analysis](05_gene_function.md)
