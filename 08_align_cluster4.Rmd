@@ -1,0 +1,24 @@
+---
+title: "Cluster 4 Alignments"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Since the secreted proteins in cluster 4 show some evidence of coordinated expression there are two checks we would like to make;
+
+1. Are these transcripts similar in sequence (and therefore perhaps derived from the same gene)?
+2. Are these transcripts co-located on the genome?
+
+We start by extracting the transcript cluster ids and their corresponding representative transcripts
+```{r}
+clusters <- read_tsv("hpc/corset/03-clusters.txt",col_names = c("contig","cluster"))
+
+readxl::read_excel("raw_data/annotated_DEG_hm_ira.xlsx",na = "NA") %>% 
+  filter(hm_cluster.x==4) %>% 
+  select(cluster_id,transcript) %>% 
+  write_delim(file="hpc/secreted_alignments/c4.txt")
+```
+

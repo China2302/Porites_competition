@@ -7,13 +7,19 @@ Counts obtained from Corset were analysed with DESeq to identify
 differentially expressed genes between HardCoral treatments.
 
 Next we identify cluster ids that correspond to Symbiont or Barnacle
-transcripts
+transcripts. A total of 2297 barnacle transcripts from 492 were excluded
+as a result.
 
 Initial data exploration with PCA revealed that PdLd is an extreme
 outlier. We therefore excluded this sample from further analysis. We
 also can see from the Barnacle counts that these were heavily
 concentrated in three samples suggesting that only these three samples
-were infected with coral-inhabiting barnacles.
+were infected with coral-inhabiting barnacles. It is also clear from
+this figure that a small fraction of transcripts identified as
+potentially of barnacle origin were found across all samples. Although
+these transcripts are are most likely not of barnacle origin they were
+excluded from analysis because their status (coral or barnacle) was
+ambiguous.
 
 ![](02_deseq_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
 
@@ -66,4 +72,4 @@ competition).
 
     ## [1] "#4A6FE3" "#9DA8E2" "#E2E2E2" "#E495A5" "#D33F6A"
 
-![](02_deseq_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](02_deseq_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->

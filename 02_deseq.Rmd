@@ -24,6 +24,7 @@ library(ComplexHeatmap)
 library(ggpubr)
 library(circlize)
 library(colorspace)
+library(cowplot)
 ```
 
 Counts obtained from Corset were analysed with DESeq to identify differentially expressed genes between HardCoral treatments. 
@@ -56,10 +57,20 @@ counts_barnacle <- counts[which((rownames(counts) %in% barnacle_clusters$cluster
 
 Next we identify cluster ids that correspond to Symbiont or Barnacle transcripts.  A total of `r barnacle_transcripts %>% nrow()` barnacle transcripts from `r nrow(barnacle_clusters)` were excluded as a result.
 
-Initial data exploration with PCA revealed that PdLd is an extreme outlier.  We therefore excluded this sample from further analysis. We also can see from the Barnacle counts that these were heavily concentrated in three samples suggesting that only these three samples were infected with coral-inhabiting barnacles.
+Initial data exploration with PCA revealed that PdLd is an extreme outlier.  We therefore excluded this sample from further analysis. We also can see from the Barnacle counts that these were heavily concentrated in three samples suggesting that only these three samples were infected with coral-inhabiting barnacles.  It is also clear from this figure that a small fraction of transcripts identified as potentially of barnacle origin were found across all samples.  Although these transcripts are are most likely not of barnacle origin they were excluded from analysis because their status (coral or barnacle) was ambiguous. 
 
 ```{r}
-heatmap(counts_barnacle)
+col_fun_barn = colorRamp2(c(0, 9), c("white", "red"))
+
+hm <- Heatmap(log2(counts_barnacle+1), 
+        col = col_fun_barn, 
+        show_row_names = FALSE, 
+        heatmap_legend_param = list(title="Log Count", legend_width = unit(10,"cm")))
+hm_plot <- grid.grabExpr(draw(hm))
+
+plot_grid(hm_plot)
+ggsave2("figures/barnacle_hm.png", width = 18,height = 10, units = "cm", dpi = 300)
+ggsave2("figures/barnacle_hm.pdf", width = 18,height = 10, units = "cm", dpi = 300)
 ```
 
 
@@ -243,7 +254,6 @@ rdp <- predict_amps(rd) %>% filter(prob_AMP>0.8)
 ```{r}
 # Setup Data for the Heatmap itself and for the various annotations
 #
-library(cowplot)
 ct_genes_tidy <- assay(vsd2)[res_ct$row,] %>%
   as.data.frame() %>%
   rownames_to_column("cluster_id")
@@ -340,7 +350,8 @@ plot_grid(pca_plot ,
           label_x = 0, label_y = 0,
           hjust = -0.5, vjust = -0.5)
 
-ggsave2("figures/pca_hm.png", width = 12,height = 10)
+ggsave2("figures/pca_hm.png", width = 18,height = 15, units = "cm", dpi = 300)
+ggsave2("figures/pca_hm.pdf", width = 18,height = 15, units = "cm", dpi = 300)
 ```
 
 
