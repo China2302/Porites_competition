@@ -54,23 +54,24 @@ polyp_act_long %>% na.omit() %>%
   group_by(HARD,TREAT,TimeCat) %>%   
   mutate(tankcount=length(unique(TANK))) %>% 
   group_by(HARD,TREAT,TimeCat,Activity) %>% 
-  mutate(catcount=n()) %>% 
+  summarise(catcount=n(),tankcount=first(tankcount)) %>% 
   ungroup() %>% 
   mutate(TREAT = ifelse(TREAT=="Yes","Competition","Control")) %>% 
   mutate(TimeCat = as.factor(TimeCat)) %>% 
   ggplot(aes(x=TimeCat)) + 
   geom_col(aes(fill=Activity,y=catcount), position = "fill") +
-  geom_text(aes(y=0.1,label=tankcount), fill = "transparent",size=2, color="grey40") +
+  geom_text(aes(y=0.1,label=tankcount), fill = "transparent",size=8, color="grey40") +
   geom_vline(xintercept=4.5,color="blue") +
   facet_grid(HARD~TREAT) + 
   theme_pubclean() +
-  theme(axis.text.x = element_text(angle=90)) + 
+  theme(axis.text.x = element_text(angle=90)) + theme(text = element_text(size=24)) +
   xlab("Days Since Start") + ylab("Proportion of Nubbins")
 ```
 
 
 ```{r, echo=FALSE, eval=FALSE}
-ggsave("figures/polyp_activity.png",width = 12,height = 8)
+ggsave("figures/polyp_activity.png",width = 18,height = 12, dpi = 300)
+ggsave("figures/polyp_activity.pdf",width = 18,height = 12, dpi = 300)
 ```
 
 

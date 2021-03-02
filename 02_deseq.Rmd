@@ -342,7 +342,7 @@ hm <- Heatmap(ct_heatmap_data_relative,
 
 hm_plot <- grid.grabExpr(draw(hm))
 
-plot_grid(pca_plot ,
+plot_grid(pca_plot + coord_cartesian(ylim = c(-28,25)),
           hm_plot ,
           ncol = 1, 
           rel_heights = c(0.4,0.6), 

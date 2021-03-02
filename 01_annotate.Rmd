@@ -214,3 +214,15 @@ saveRDS(final_annotated_clusters,file = "raw_data/annotated_clusters_porites.rda
 
 
 
+
+
+
+```{r}
+# Formatting Supp Info Table
+de_clusters <- readxl::read_excel("raw_data/annotated_DEG_hm_ira.xlsx") %>% pull(cluster_id)
+
+final_annotated_clusters_de <- final_annotated_clusters %>% filter(cluster_id %in% de_clusters)
+write_tsv(final_annotated_clusters_de,"cache/final_annotated_clusters_de.tsv")
+
+```
+
