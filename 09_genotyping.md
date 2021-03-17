@@ -21,9 +21,9 @@ call SNPs and calculte genotype likelihoods.Analysis with angsd resulted
 in a total of 30289 SNPs. These were then used for analysis with
 ngsRelate. Relevant commands are in;
 
-  - [01\_prepare\_inputs.sh](hpc/genotyping/01_prepare_inputs.sh)
-  - [02\_angsd.sh](hpc/genotyping/02_angsd.sh)
-  - [03\_ngsrelate.sh](hpc/genotyping/03_ngsrelate.sh)
+  - [01\_prepare\_inputs.sh](hpc/genotypes/01_prepare_inputs.sh)
+  - [02\_angsd.sh](hpc/genotypes/02_angsd.sh)
+  - [03\_ngsrelate.sh](hpc/genotypes/03_ngsrelate.sh)
 
 Although ngsRelate calculates many statistics the key statistic for our
 purposes is the relatedness statistic, theta. For a diploid organism
