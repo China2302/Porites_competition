@@ -54,7 +54,7 @@ polyp_act_long %>% na.omit() %>%
   group_by(HARD,TREAT,TimeCat) %>%   
   mutate(tankcount=length(unique(TANK))) %>% 
   group_by(HARD,TREAT,TimeCat,Activity) %>% 
-  summarise(catcount=n(),tankcount=first(tankcount)) %>% 
+  summarise(catcount=n(),tankcount=dplyr::first(tankcount)) %>% 
   ungroup() %>% 
   mutate(TREAT = ifelse(TREAT=="Yes","Competition","Control")) %>% 
   mutate(TimeCat = as.factor(TimeCat)) %>% 
@@ -65,7 +65,9 @@ polyp_act_long %>% na.omit() %>%
   facet_grid(HARD~TREAT) + 
   theme_pubclean() +
   theme(axis.text.x = element_text(angle=90)) + theme(text = element_text(size=24)) +
-  xlab("Days Since Start") + ylab("Proportion of Nubbins")
+  theme(legend.position = "bottom") +
+  xlab("Days Since Start") + ylab("Proportion of Nubbins") +
+  scale_fill_viridis_d()
 ```
 
 

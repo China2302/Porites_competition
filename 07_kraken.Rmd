@@ -25,6 +25,7 @@ read_mpa <- function(path){
 genome_mpa31_data <- do.call(rbind,lapply(genome_mpa31_files,read_mpa)) %>% add_column(kmer="g31")
 
 mpa_data <- genome_mpa31_data 
+
 ```
 
 
@@ -33,7 +34,7 @@ clade_names <- c("A"="Symbiodinium","B"="Breviolum","C"="Cladocopium","D"="Durus
 
 symbiodinium_data <- mpa_data %>% 
   filter(grepl(pattern = "Symbiodinium_sp_clade",taxonomy) | 
-           grepl( pattern = "o__Scleractinia", taxonomy) | grepl( pattern = "Balanidae", taxonomy)) %>% 
+           grepl( pattern = "o__Scleractinia$", taxonomy) | grepl( pattern = "Balanidae", taxonomy)) %>% 
   mutate(clade = str_match(taxonomy,pattern = "clade_([ABCDF])")[,2]) %>% 
   mutate(clade = ifelse(grepl( pattern = "o__Scleractinia", taxonomy),"Host",clade)) %>% 
   mutate(clade = ifelse(grepl( pattern = "Balanidae", taxonomy),"Barnacle",clade)) %>% 
@@ -52,5 +53,16 @@ ggplot(symbiodinium_data ,aes(x=ID,y=read_count/1e6)) +
   geom_col(aes(fill=reorder(clade_name, read_count))) +  theme_pubclean() +
   xlab("") + ylab("Read Count (Millions)") + 
   theme(axis.text.x = element_text(angle=90), axis.ticks.x = element_blank(), legend.title = element_blank(), legend.position = "right")
+```
+
+Summarise in terms of Barnacle, Symbiodiniaceae, Coral, Other
+
+```{r}
+# Extract metazoa totals
+metazoa_data <- mpa_data %>% filter(taxonomy=='d__Eukaryota|k__Metazoa') %>% select(metazoa_rc=read_count,sample)
+
+summary_data <- symbiodinium_data %>% left_join(metazoa_data,by="sample")
+
+
 ```
 

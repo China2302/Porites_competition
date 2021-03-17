@@ -28,7 +28,7 @@ performed based on a model with no intercept and a separate coefficient
 for each level of the variable `HardCoralTrt`. This model gives us
 maximum flexibility for statistical testing using different contrasts.
 
-> ~ 0+HardCoralTrt
+> \~ 0+HardCoralTrt
 
 One issue with the above analysis is that it estimates a separate value
 for each of the control samples, meaning that each such estimate will be

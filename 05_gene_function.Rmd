@@ -140,27 +140,45 @@ fanno_data[(fanno_data$name=="Secreted") & (fanno_data$evidence_level>1),'displa
 fanno_data$name <- factor(fanno_data$name,levels=c("Secreted","Immunity","Stress"))
 
 fanno_data_toxins <- fanno_data %>% filter(Toxin=="T")
+```
 
-fanno_data %>% 
-  ggplot(aes(x=name,y=rank)) + 
-  geom_hline(yintercept = 0) +
-  geom_violin(aes(fill=name)) +
-  geom_point(size=3,color="black") + guides(fill=FALSE) +
-  geom_point(data=fanno_data_toxins,size=3,color="blue") +
-  geom_label_repel(aes(label=display_name),size=3) +
-  coord_flip() +
-  xlab("") + ylab("Relative Rank") +
-  theme_pubclean() + theme(text = element_text(size=12))
+Next we plot the relative expression for genes in key categories, Immunity, Stress and Secreted (Toxins).  We use ranks in this plot because some of these genes have extreme outlying fold change values (due to being abundant in a few samples and absent in others) and would distort a more conventional plot such as a volcanoplot.  
 
+```{r}
+
+label_data <- fanno_data %>% select(display_name,rank) %>% distinct() %>% filter(display_name!="") %>% filter(!is.na(display_name))
+
+pr <- fanno_data %>% 
+  group_by(rank) %>% 
+  mutate(prop=1/n()) %>% 
+  ungroup() %>% 
+  ggplot(aes(x=rank)) + 
+  geom_col(aes(fill=name,y=prop),color="black") + theme_pubclean() + theme(legend.title = element_blank(), legend.position = "bottom") + xlab("Expression Rank") + 
+  ylab("") + 
+  geom_vline(aes(xintercept=0)) +
+
+  #  geom_point(aes(y=0.5),size=1,color="black") + 
+  geom_point(aes(y=1.1),data=fanno_data_toxins,size=2,color="blue") +
+  geom_label(data=label_data,aes(label=display_name),y=1.5,size=3) +
+  expand_limits(y=1.6) +
+  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.line.x = element_line(), panel.grid.major.y = element_blank())
+
+pm <- fanno_data %>% 
+  ggplot(aes(x=rank)) + 
+  geom_density(aes(color=name)) + theme_pubclean() + 
+  guides(color=FALSE) + xlab("") + 
+  theme(axis.line.x = element_blank(), axis.text.x = element_blank(),axis.ticks.x = element_blank())
+
+library(cowplot)
+plot_grid(pm,pr,nrow = 2, align = "v")
+
+```
+
+Figure 3: Ranking distribution of differentially expressed transcripts under non-contact competition by functional category: “Stress” in blue, “Immunity” in green and “Secreted” in red. Individual transcripts are shown as vertical bars positioned along the horizontal axis (points) according to the rank of their effect size (log2 fold change under competition compared with controls). Positive ranks represent transcripts up-regulated in competition compared to controls.  Transcripts belonging to multiple categories are shown as multi-coloured bars. The density of genes in each category are shown as smoothed lines above the bar plot. Blue points represent putative toxins. Category “Stress” includes transcripts associated with response to reactive oxygen species as well as those involved in the unfolded protein response. Labelled points correspond to transcripts with strong evidence of homology to named proteins (CAT: calase, AOSL: allene oxide synthase-lipoxygenase, SYT: synaptotagmin-like, TNFR: tumor necrosis factor receptor, CALR: calreticulin).
+
+```{r}
 ggsave("figures/functions2.png",width = 85,height = 120, units = "mm", dpi = 300)
 ggsave("figures/functions2.pdf",width = 85,height = 120, units = "mm", dpi = 300)
 ```
-
-
-```{r}
-row_anno_data %>% group_by(evidence_level) %>% 
-  summarise(count=n())
-```
-
 
 

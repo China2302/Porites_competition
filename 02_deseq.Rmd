@@ -210,9 +210,10 @@ Now a heatmap for all the DE genes between treatment and control. For this the r
 ```{r}
 # PCA Plot
 #
-hm_col_groups <- list(blue = c("PdLb","PfLd","PfLa"), grey = c("PdC","PfC"),white=c("PfLc","PfLe","PfLb"), red = c("PdLe","PdLa","PdLc"))
+hm_col_groups <- list(blue = c("Pd-Lb","Pf-Ld","Pf-La"), grey = c("Pd-C","Pf-C"),white=c("Pf-Lc","Pf-Le","Pf-Lb"), red = c("Pd-Le","Pd-La","Pd-Lc"))
 
 pca_data3 <- pca_data2 %>% 
+  mutate(name = str_replace(group,":","-")) %>% 
   mutate(colgroup = "grey") %>% 
   mutate(colgroup = ifelse(name %in% hm_col_groups$red,"red",colgroup)) %>% 
   mutate(colgroup = ifelse(name %in% hm_col_groups$white,"white",colgroup)) %>% 
@@ -238,6 +239,7 @@ pca_plot <- pca_data3 %>%
   guides(fill=FALSE,col=FALSE) +
   theme(legend.position = "right", legend.title = element_blank())
 ```
+
 ```{r}
 library(ampir)
 
@@ -274,12 +276,13 @@ mesenteries_data <- readxl::read_excel("raw_data/Mesentries Obsv_Bothcorals.xlsx
 
 # You can eliminate the grey bar on PCA for:  PdLc , PfLe and PfLd.
 mesenteries_groups <- mesenteries_data %>% 
-  unite("pair",HARD,Softies,sep="") %>%
-  filter(!(pair %in% c("PdLc","PfLe","PfLd"))) %>% 
+  unite("pair",HARD,Softies,sep="-") %>%
+  filter(!(pair %in% c("Pd-Lc","Pf-Le","Pf-Ld"))) %>% 
   pull(pair) %>% unique()
 
 
 ct_heatmap_data_relative <- sweep(ct_heatmap_data, MARGIN=1, STATS= rowMeans(ct_heatmap_data)) %>% as.matrix()
+colnames(ct_heatmap_data_relative) <- colnames(ct_heatmap_data_relative) %>% str_replace("Pd","Pd-") %>% str_replace("Pf","Pf-")
 
 row_anno_data <- readxl::read_excel("raw_data/annotated_DEG_hm_ira.xlsx",na = "NA") %>% 
   mutate(Secreted = ifelse(!is.na(secreted),"SE","FALSE")) %>% 
