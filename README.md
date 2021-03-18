@@ -34,3 +34,4 @@ tar -zxvf data.transcriptome.tgz
 - [Analysis of Polyp Activity Observations](04_polyp_activity.md)
 - [Gene Function Analysis](05_gene_function.md)
 - [Relatedness](09_genotyping.md)
+- [Taxonomic Profiling of Raw Reads](07_kraken.md)
