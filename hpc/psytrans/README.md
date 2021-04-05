@@ -4,6 +4,8 @@ The machine learning tool, [psytrans](https://github.com/sylvainforet/psytrans) 
 
 In order to learn the difference between host and symbiont psytrans requires reference databases.  We use predicted transcripts from the Acropora millepora genome as a host reference and EST sequences from *Breviolum minutum* as a symbiont reference.
 
+Out of the 422222 contigs in the original assembly Psytrans classified 340399 as coral and 81823 of Symbiodiniaceae origin. 
+
 The output file `species1_good.PdPf_transfuse95_cons.fa` from psytrans represents the final reference transcriptome used in this study. 
 
 BUSCO results for this are;

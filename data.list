@@ -5,3 +5,16 @@ raw_data/Porites_polypact.csv
 raw_data/DE_174_database.xlsx
 raw_data/annotated_DEG.tsv
 raw_data/annotated_clusters_porites.rda
+raw_data/annotated_DEG_hm_ira.xlsx
+hpc/kraken/kraken_mpa/Pd_T107.mpa
+hpc/kraken/kraken_mpa/Pd_T116.mpa
+hpc/kraken/kraken_mpa/Pd_T119.mpa
+hpc/kraken/kraken_mpa/Pd_T2.mpa
+hpc/kraken/kraken_mpa/Pd_T83.mpa
+hpc/kraken/kraken_mpa/Pd_T98.mpa
+hpc/kraken/kraken_mpa/Pf_T104.mpa
+hpc/kraken/kraken_mpa/Pf_T53.mpa
+hpc/kraken/kraken_mpa/Pf_T68.mpa
+hpc/kraken/kraken_mpa/Pf_T71.mpa
+hpc/kraken/kraken_mpa/Pf_T74.mpa
+hpc/kraken/kraken_mpa/Pf_T89.mpa

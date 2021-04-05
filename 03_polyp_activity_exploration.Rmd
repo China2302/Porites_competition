@@ -43,7 +43,7 @@ polyp_Pf<- polyp %>% group_by(HARD) %>% filter(HARD=="Pf")
 timeTableN = with(polyp[polyp$TREAT=="NO",],table(TimeCat, Activity))
 #pdf(file="results/MosaicPlot_Control_Allsamples.pdf",height =8,width = 10)
 mosaicplot(timeTableN, col=1:3,cex.axis = 1.05, font=14,
-           main="Activity proportions without competition", xlab="Time (days)")
+           main="Activity proportions without competition (Pd, Pe, Pf)", xlab="Time (days)")
 #dev.off()
 ```
 
@@ -77,8 +77,6 @@ mosaicplot(timeTableN_Pf, col=1:3,cex.axis = 1.1,
 
 ```{r}
 ## table and plot for competition
-par(mfrow=c(1,3))
-
 timeTableY = with(polyp[polyp$TREAT=="Yes",],table(TimeCat, Activity))
 #pdf(file="results/MosaicPlot_Treat_Allsamples.pdf",height =8,width = 10)
 mosaicplot(timeTableY, col=1:3,cex.axis = 1.1, 

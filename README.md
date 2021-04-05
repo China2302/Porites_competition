@@ -25,6 +25,7 @@ tar -zxvf data.transcriptome.tgz
 - [Symbiont Transcript Removal](hpc/psytrans)
 - [Clustering transcripts and counting assigned reads](hpc/corset)
 - [Functional Annotation with Trinotate](hpc/trinotate)
+- [Genotyping](hpc/genotypes)
 
 ### Statistical Analysis and Visualisation
 
@@ -32,3 +33,5 @@ tar -zxvf data.transcriptome.tgz
 - [Differential Expression Analysis](02_deseq.md)
 - [Analysis of Polyp Activity Observations](04_polyp_activity.md)
 - [Gene Function Analysis](05_gene_function.md)
+- [Relatedness](09_genotyping.md)
+- [Taxonomic Profiling of Raw Reads](07_kraken.md)
