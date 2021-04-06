@@ -158,27 +158,27 @@ pr <- fanno_data %>%
   geom_vline(aes(xintercept=0)) +
 
   #  geom_point(aes(y=0.5),size=1,color="black") + 
-  geom_point(aes(y=1.1),data=fanno_data_toxins,size=2,color="blue") +
-  geom_label(data=label_data,aes(label=display_name),y=1.5,size=3) +
-  expand_limits(y=1.6) +
-  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.line.x = element_line(), panel.grid.major.y = element_blank())
+  geom_point(aes(y=1.01),data=fanno_data_toxins,size=2,color="blue") +
+  geom_label(data=label_data,aes(label=display_name),y=1.1,size=1.5) +
+  expand_limits(y=1.1) +
+  theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.line.x = element_line(), panel.grid.major.y = element_blank()) + theme(text=element_text(size=8)) 
 
 pm <- fanno_data %>% 
   ggplot(aes(x=rank)) + 
   geom_density(aes(color=name)) + theme_pubclean() + 
-  guides(color=FALSE) + xlab("") + 
-  theme(axis.line.x = element_blank(), axis.text.x = element_blank(),axis.ticks.x = element_blank())
+  guides(color=FALSE) + xlab("") + ylab("") +
+  theme(axis.line.x = element_blank(), axis.text.x = element_blank(),axis.ticks.x = element_blank()) +theme(text=element_text(size=8)) 
 
 library(cowplot)
-plot_grid(pm,pr,nrow = 2, align = "v")
-
+plot_grid(pm,pr,nrow = 2, align = "v", rel_heights = c(0.4,0.6))
+ggsave("figures/functions2.png",width = 85,height = 120, units = "mm", dpi = 300)
+ggsave("figures/functions2.pdf",width = 85,height = 120, units = "mm", dpi = 300)
 ```
 
 Figure 3: Ranking distribution of differentially expressed transcripts under non-contact competition by functional category: “Stress” in blue, “Immunity” in green and “Secreted” in red. Individual transcripts are shown as vertical bars positioned along the horizontal axis (points) according to the rank of their effect size (log2 fold change under competition compared with controls). Positive ranks represent transcripts up-regulated in competition compared to controls.  Transcripts belonging to multiple categories are shown as multi-coloured bars. The density of genes in each category are shown as smoothed lines above the bar plot. Blue points represent putative toxins. Category “Stress” includes transcripts associated with response to reactive oxygen species as well as those involved in the unfolded protein response. Labelled points correspond to transcripts with strong evidence of homology to named proteins (CAT: calase, AOSL: allene oxide synthase-lipoxygenase, SYT: synaptotagmin-like, TNFR: tumor necrosis factor receptor, CALR: calreticulin).
 
 ```{r}
-ggsave("figures/functions2.png",width = 85,height = 120, units = "mm", dpi = 300)
-ggsave("figures/functions2.pdf",width = 85,height = 120, units = "mm", dpi = 300)
+
 ```
 
 

@@ -84,7 +84,8 @@ pC <- plot_data %>%
     coord_flip() + xlab("") + ylab("Read Count  (Thousands)") + theme_cowplot() + theme(legend.title = element_blank())
 
 
-plot_grid(pA,pC,ncol=1)
+plot_grid(pA,pC,ncol=1, labels = c("A","B"))
+ggsave("figures/kraken.png",width = 150,height = 120, units = "mm", dpi = 300)
 ```
 
 

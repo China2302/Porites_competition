@@ -1,0 +1,40 @@
+---
+title: "Diamond Analysis"
+output: github_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(cowplot)
+library(ggpubr)
+```
+
+
+```{r}
+diamond <- read_tsv("hpc/blast2lca/04_diamond.log",col_names = c("contig","hit","Eval","bitscore","taxon_id","Phylum")) 
+
+dp <- diamond %>% 
+  filter(Eval<0.00001) %>% 
+  group_by(Phylum) %>% 
+  mutate(count=n()) %>% 
+  filter(count>100) %>% filter(Phylum!="0") 
+
+
+bxp <- ggplot(dp,aes(x=reorder(Phylum,desc(count)))) + 
+  geom_boxplot(aes(x=reorder(Phylum,desc(count)),y=log(bitscore))) +
+  theme_pubclean() +
+  theme(axis.text.x = element_text(angle=90)) +
+  xlab("") + ylab("Log10 bitscore")
+
+brp <- ggplot(dp,aes(x=reorder(Phylum,desc(count)))) + 
+  geom_bar(aes(x=reorder(Phylum,desc(count)),y=..count../1000)) +
+  theme_pubclean() +
+    theme(axis.text.x = element_text(angle=90)) +
+  xlab("") + ylab("Number of transcripts (thousands)")
+
+plot_grid(bxp,brp,ncol=1,align = "v", labels = c("A","B"), scale=0.9)
+
+ggsave("figures/diamond.png",width = 120,height = 140, units = "mm", dpi = 300)
+```
