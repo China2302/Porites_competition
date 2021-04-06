@@ -27,18 +27,18 @@ distort a more conventional plot such as a volcanoplot.
 ![](05_gene_function_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
 
 Figure 3: Ranking distribution of differentially expressed transcripts
-under non-contact competition by functional category: “Stress” in blue,
-“Immunity” in green and “Secreted” in red. Individual transcripts are
-shown as vertical bars positioned along the horizontal axis (points)
-according to the rank of their effect size (log2 fold change under
-competition compared with controls). Positive ranks represent
-transcripts up-regulated in competition compared to controls.
-Transcripts belonging to multiple categories are shown as multi-coloured
-bars. The density of genes in each category are shown as smoothed lines
-above the bar plot. Blue points represent putative toxins. Category
-“Stress” includes transcripts associated with response to reactive
-oxygen species as well as those involved in the unfolded protein
-response. Labelled points correspond to transcripts with strong evidence
-of homology to named proteins (CAT: calase, AOSL: allene oxide
-synthase-lipoxygenase, SYT: synaptotagmin-like, TNFR: tumor necrosis
-factor receptor, CALR: calreticulin).
+under non-contact competition coloured by functional category. A and B
+share the same colour scheme. A. Individual transcripts are shown as
+vertical bars positioned along the horizontal axis according to the rank
+of their effect size (log2 fold change under competition compared with
+controls). Positive ranks represent transcripts up-regulated in
+competition compared to controls. Transcripts belonging to multiple
+categories are shown as multi-coloured bars. Blue points represent
+putative toxins. Category “Stress” includes transcripts associated with
+response to reactive oxygen species as well as those involved in the
+unfolded protein response. Labelled points correspond to transcripts
+with strong evidence of homology to named proteins (CAT: calase, AOSL:
+allene oxide synthase-lipoxygenase, SYT: synaptotagmin-like, TNFR: tumor
+necrosis factor receptor, CALR: calreticulin). B Smoothed density plot
+showing the density of genes in each category according to expression
+rank. Horizontal axis in is shared with A.

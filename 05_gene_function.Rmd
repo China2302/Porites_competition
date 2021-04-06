@@ -153,7 +153,7 @@ pr <- fanno_data %>%
   mutate(prop=1/n()) %>% 
   ungroup() %>% 
   ggplot(aes(x=rank)) + 
-  geom_col(aes(fill=name,y=prop),color="black") + theme_pubclean() + theme(legend.title = element_blank(), legend.position = "bottom") + xlab("Expression Rank") + 
+  geom_col(aes(fill=name,y=prop),color="black") + theme_pubclean() + theme(legend.title = element_blank(), legend.position = "none") + xlab("Expression Rank") + 
   ylab("") + 
   geom_vline(aes(xintercept=0)) +
 
@@ -163,6 +163,12 @@ pr <- fanno_data %>%
   expand_limits(y=1.1) +
   theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), axis.line.x = element_line(), panel.grid.major.y = element_blank()) + theme(text=element_text(size=8)) 
 
+legend_b <- get_legend(
+  pr + 
+    guides(color = guide_legend(nrow = 1)) +
+    theme(legend.position = "bottom")
+)
+
 pm <- fanno_data %>% 
   ggplot(aes(x=rank)) + 
   geom_density(aes(color=name)) + theme_pubclean() + 
@@ -170,12 +176,12 @@ pm <- fanno_data %>%
   theme(axis.line.x = element_blank(), axis.text.x = element_blank(),axis.ticks.x = element_blank()) +theme(text=element_text(size=8)) 
 
 library(cowplot)
-plot_grid(pm,pr,nrow = 2, align = "v", rel_heights = c(0.4,0.6))
+plot_grid(pr,pm,legend_b,nrow = 3, align = "v", rel_heights = c(0.55,0.4,0.05), labels = c("A","B"))
 ggsave("figures/functions2.png",width = 85,height = 120, units = "mm", dpi = 300)
 ggsave("figures/functions2.pdf",width = 85,height = 120, units = "mm", dpi = 300)
 ```
 
-Figure 3: Ranking distribution of differentially expressed transcripts under non-contact competition by functional category: “Stress” in blue, “Immunity” in green and “Secreted” in red. Individual transcripts are shown as vertical bars positioned along the horizontal axis (points) according to the rank of their effect size (log2 fold change under competition compared with controls). Positive ranks represent transcripts up-regulated in competition compared to controls.  Transcripts belonging to multiple categories are shown as multi-coloured bars. The density of genes in each category are shown as smoothed lines above the bar plot. Blue points represent putative toxins. Category “Stress” includes transcripts associated with response to reactive oxygen species as well as those involved in the unfolded protein response. Labelled points correspond to transcripts with strong evidence of homology to named proteins (CAT: calase, AOSL: allene oxide synthase-lipoxygenase, SYT: synaptotagmin-like, TNFR: tumor necrosis factor receptor, CALR: calreticulin).
+Figure 3: Ranking distribution of differentially expressed transcripts under non-contact competition coloured by functional category. A and B share the same colour scheme. A. Individual transcripts are shown as vertical bars positioned along the horizontal axis according to the rank of their effect size (log2 fold change under competition compared with controls). Positive ranks represent transcripts up-regulated in competition compared to controls.  Transcripts belonging to multiple categories are shown as multi-coloured bars. Blue points represent putative toxins. Category “Stress” includes transcripts associated with response to reactive oxygen species as well as those involved in the unfolded protein response. Labelled points correspond to transcripts with strong evidence of homology to named proteins (CAT: calase, AOSL: allene oxide synthase-lipoxygenase, SYT: synaptotagmin-like, TNFR: tumor necrosis factor receptor, CALR: calreticulin). B Smoothed density plot showing the density of genes in each category according to expression rank. Horizontal axis in is shared with A.
 
 ```{r}
 

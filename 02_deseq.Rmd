@@ -226,9 +226,9 @@ colgroup_colors <- c(blue="#4A6FE3",white="#9DA8E2", grey="#E2E2E2", red="#D33F6
 
 pca_plot <- pca_data3 %>% 
   ggplot(aes(y=PC1,x=PC2)) + 
-  geom_point(aes(shape=HardCoral, fill=colgroup),size=4) + 
 #  geom_point(aes(x=-1,y=PC2, color=colgroup),size=4)+
-  geom_label_repel(aes(label=name),point.padding = unit(0.2,"cm"))  + 
+  geom_label_repel(aes(label=name),point.padding = unit(0.5,"cm"), min.segment.length = 0.1, size=0.5)  + 
+  geom_point(aes(shape=HardCoral, fill=colgroup),size=4) + 
   ylab(paste0("PC1: ",percentVar2[1],"% variance")) + 
   xlab(paste0("PC2: ",percentVar2[2],"% variance"))  +  
   scale_fill_manual(values=colgroup_colors) +
@@ -240,7 +240,7 @@ pca_plot <- pca_data3 %>%
   theme(legend.position = "right", legend.title = element_blank())
 ```
 
-```{r}
+```{r, include=FALSE}
 library(ampir)
 
 rd <- readxl::read_excel("raw_data/annotated_DEG_hm_ira.xlsx",na = "NA") %>% 
