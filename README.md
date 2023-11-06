@@ -11,11 +11,11 @@ git clone https://github.com/China2302/Porites_competition.git
 2. Download the raw data and unpack it from within the project repository.
 ```bash
 cd Porites_competition
-wget 'https://cloudstor.aarnet.edu.au/plus/s/zjlFSUchshirLUt/download' -O data.tgz
+wget 'http://data.qld.edu.au/public/Q5999/china2302/Porites_competition/data.tgz' -O data.tgz
 tar -zxvf data.tgz
 
 # This is a much larger file required for some analyses only
-wget 'https://cloudstor.aarnet.edu.au/plus/s/uDTruJ83Q4OcHHd/download' -O data.transcriptome.tgz
+wget 'http://data.qld.edu.au/public/Q5999/china2302/Porites_competition/data.transcriptome.tgz' -O data.transcriptome.tgz
 tar -zxvf data.transcriptome.tgz
 ```
 
